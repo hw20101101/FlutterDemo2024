@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +31,8 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
+  //添加收藏（业务逻辑）
+  var favorites = <WordPair>[];
 
   void getNext() {
     current = WordPair.random();
@@ -38,9 +40,6 @@ class MyAppState extends ChangeNotifier {
     //确保向任何通过 watch 方法跟踪 MyAppState 的对象发出通知
     notifyListeners();
   }
-
-  //添加收藏（业务逻辑）
-  var favorites = <WordPair>[];
 
   void toggleFavorite() {
     if (favorites.contains(current)) {
@@ -55,9 +54,44 @@ class MyAppState extends ChangeNotifier {
 
 class MyHomePage extends StatelessWidget {
   @override
-  //每当 widget 的环境发生变化时，系统都会自动调用该方法，以便 widget 始终保持最新状态。
   Widget build(BuildContext context) {
-    //MyHomePage 使用 watch 方法跟踪对应用当前状态的更改
+    return Scaffold(
+      body: Row(
+        children: [
+          SafeArea(
+            child: NavigationRail(
+              extended: false,
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home),
+                  label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.favorite),
+                  label: Text('Favorites'),
+                ),
+              ],
+              selectedIndex: 0,
+              onDestinationSelected: (value) {
+                print('selected: $value');
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: GeneratorPage(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GeneratorPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
@@ -68,48 +102,32 @@ class MyHomePage extends StatelessWidget {
       icon = Icons.favorite_border;
     }
 
-    //每个 build 方法都必须返回一个 widget 或（更常见的）嵌套 widget 树。在本例中，顶层 widget 是 Scaffold
-    return Scaffold(
-      //Column 是 Flutter 中最基础的布局 widget 之一，它接受任意数量的子项并将这些子项从上到下放在一列中
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Text(
-            // 'A random idea A random idea A random idea A random idea \n A random idea:'),
-            // Text(appState.current.asLowerCase),
-            BigCard(pair: pair),
-
-            //增加垂直方向的间距
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //收藏按钮
-                ElevatedButton.icon(
-                    onPressed: () {
-                      appState.toggleFavorite();
-                    },
-                    icon: Icon(icon),
-                    label: Text("Like")),
-
-                SizedBox(
-                  width: 14,
-                ),
-
-                //下一个按钮
-                ElevatedButton(
-                  onPressed: () {
-                    appState.getNext();
-                  },
-                  child: Text("Next"),
-                ),
-              ],
-            )
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BigCard(pair: pair),
+          SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                icon: Icon(icon),
+                label: Text('Like'),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  appState.getNext();
+                },
+                child: Text('Next'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
