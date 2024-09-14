@@ -2,13 +2,52 @@
 
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   // 应用的起点
-  runApp(MyApp());
+  //runApp(MyApp());
+  runApp(TabApp());
 }
+
+// ================= Tabbar ↓ =================
+
+class TabApp extends StatelessWidget {
+  const TabApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: const TabBar(tabs: [
+              Tab(
+                icon: Icon(Icons.directions_bike),
+              ),
+              Tab(
+                icon: Icon(Icons.directions_car),
+              ),
+              Tab(
+                icon: Icon(Icons.directions_train),
+              )
+            ]),
+            title: const Text("Tabbar demo"),
+          ),
+          body: const TabBarView(children: [
+            Icon(Icons.directions_bike),
+            Icon(Icons.directions_car),
+            Icon(Icons.directions_train),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+// ================= 侧边栏导航 ↓ =================
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
