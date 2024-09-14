@@ -1,6 +1,7 @@
 // import 'dart:ffi';
 
 import 'package:english_words/english_words.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -275,20 +276,20 @@ class FirstRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Route'),
+    //使用 CupertinoPageRoute 进行导航
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('First Route'),
       ),
-      body: Center(
-        child: ElevatedButton(
+      child: Center(
+        child: CupertinoButton(
+            child: const Text('Open route'),
             onPressed: () {
-              // 跳转到第二个路由
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const SecondRoute()),
+                CupertinoPageRoute(builder: (context) => const SecondRoute()),
               );
-            },
-            child: const Text('Open route')),
+            }),
       ),
     );
   }
@@ -299,18 +300,16 @@ class SecondRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              //返回到上一个路由
-              Navigator.pop(context);
-            },
-            child: const Text('Go back!')),
-      ),
-    );
+    return CupertinoPageScaffold(
+        navigationBar: const CupertinoNavigationBar(
+          middle: Text('Second Route'),
+        ),
+        child: Center(
+          child: CupertinoButton(
+              child: const Text('Go back!'),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ));
   }
 }
