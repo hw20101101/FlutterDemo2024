@@ -353,7 +353,12 @@ class TodosScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DetailScreen(todo: todos[index]),
+                  //builder: (context) => DetailScreen(todo: todos[index]),
+                  builder: (context) => DetailScreen(),
+                  // 将参数作为 RouteSettings 的一部分进行传递， DetailScreen 将会提取这些参数
+                  settings: RouteSettings(
+                    arguments: todos[index],
+                  ),
                 ),
               );
             },
@@ -365,19 +370,24 @@ class TodosScreen extends StatelessWidget {
 }
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key, required this.todo});
-
-  final Todo todo;
+  const DetailScreen({super.key});
+  // const DetailScreen({super.key, required this.todo});
+  // final Todo todo;
 
   @override
   Widget build(BuildContext context) {
+    // 使用 ModalRoute.of() 方法，它将会返回带有参数的当前路由。
+    final todo = ModalRoute.of(context)!.settings.arguments as Todo;
+
     return Scaffold(
       appBar: AppBar(
+        //标题
         title: Text(todo.title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Text(todo.description),
+        //内容
+        child: Text('DetailScreen:\n\n${todo.description}'),
       ),
     );
   }
