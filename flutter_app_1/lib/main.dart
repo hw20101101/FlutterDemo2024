@@ -629,7 +629,17 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
     //       //..
     //     });
     //   });
-    animation = Tween<double>(begin: 0, end: 300).animate(controller);
+    // 制造“呼吸”效果
+    animation = Tween<double>(begin: 0, end: 300).animate(controller)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          controller.forward();
+        }
+      })
+      //监听动画过程
+      ..addStatusListener((status) => print('status: $status'));
     controller.forward();
   }
 
