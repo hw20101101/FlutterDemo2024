@@ -644,7 +644,10 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   }
 
   @override
-  Widget build(BuildContext context) => AnimatedLogo(animation: animation);
+  Widget build(BuildContext context) {
+    return GrowTransition(animation: animation, child: const LogoWidget());
+  }
+  // Widget build(BuildContext context) => AnimatedLogo(animation: animation);
   // Widget build(BuildContext context) {
   //   return Center(
   //     child: Container(
@@ -677,6 +680,46 @@ class AnimatedLogo extends AnimatedWidget {
         height: animation.value,
         width: animation.value,
         child: const FlutterLogo(),
+      ),
+    );
+  }
+}
+
+class LogoWidget extends StatelessWidget {
+  const LogoWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: const FlutterLogo(),
+    );
+  }
+}
+
+class GrowTransition extends StatelessWidget {
+  const GrowTransition(
+      {required this.child, required this.animation, super.key});
+
+  final Widget child;
+  final Animation<double> animation;
+
+  @override
+  Widget build(BuildContext context) {
+    // final animation = listenable as Animation<double>;
+
+    return Center(
+      // 使用 AnimatedBuilder 进行重构
+      child: AnimatedBuilder(
+        animation: animation,
+        builder: (context, child) {
+          return SizedBox(
+            height: animation.value,
+            width: animation.value,
+            child: child,
+          );
+        },
+        child: child,
       ),
     );
   }
