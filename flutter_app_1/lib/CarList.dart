@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//使用 AI 生成的示例
+
 void main() {
   runApp(MyApp());
 }
@@ -17,7 +19,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CarListScreen extends StatelessWidget {
+class CarListScreen extends StatefulWidget {
+  @override
+  State<CarListScreen> createState() => _CarListScreenState();
+}
+
+class _CarListScreenState extends State<CarListScreen> {
   final List<Car> cars = [
     Car(
       name: "特斯拉 Model S",
@@ -63,6 +70,7 @@ class CarListScreen extends StatelessWidget {
                 ],
               ),
               onTap: () {
+                print("点击了 ${car.name}");
                 // 点击列表项后跳转到详情页面
                 Navigator.push(
                   context,
