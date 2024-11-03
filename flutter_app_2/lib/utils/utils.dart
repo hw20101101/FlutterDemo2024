@@ -15,3 +15,20 @@ void testGood() {
   List<int> oddNum = [1, 3, 4, 5, 6];
   oddNum.forEach(print);
 }
+
+// 使用扩展集合简化您的代码
+
+// 当你已经在另一个集合中存储了现有的项目时，利用扩展集合可以简化代码。
+
+// bad code
+void testBad2() {
+  List<int> firstNum = [1, 3, 5, 7, 9];
+  List<int> secondNum = [2, 4, 6, 8];
+  firstNum.addAll(secondNum);
+}
+
+// good code
+void testGood2() {
+  List<int> secondNum = [2, 4, 6, 8];
+  List<int> firstNum = [1, 3, 5, 7, 9, ...secondNum];
+}
