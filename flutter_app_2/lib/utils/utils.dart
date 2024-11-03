@@ -1,6 +1,9 @@
 // 避免不必要地创建 lambda 函数
 // 例如，在 Dart 中，下面的代码演示了如何使用箭头语法定义一个 lambda 函数：在可以使用 tear-off 的情况下，避免不必要地创建 lambda 函数。如果一个函数只是简单地调用一个带有相同参数的方法，就没有必要手动将调用包装在 lambda 函数中。
 
+import 'dart:ffi';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_application_2/models/user.dart';
 
 void badCode() {
@@ -50,4 +53,37 @@ void goodCode3() {
     ..name = "zhang san"
     ..age = 20;
   print(user.toString());
+}
+
+// ============================================
+// 使用if条件在行和列中实现最佳widget 渲染
+// 在根据行或列中的条件渲染widget 时，建议使用if条件而不是可能返回null的条件表达式。
+
+void badCode4() {
+  bool isLoggedIn = false;
+
+  Column(
+    children: [
+      isLoggedIn
+          ? ElevatedButton(
+              onPressed: () {},
+              child: const Text("go to .."),
+            )
+          : const SizedBox()
+    ],
+  );
+}
+
+void goodCode4() {
+  bool isLoggedIn = false;
+
+  Column(
+    children: [
+      if (isLoggedIn)
+        ElevatedButton(
+          onPressed: () {},
+          child: const Text(""),
+        )
+    ],
+  );
 }
