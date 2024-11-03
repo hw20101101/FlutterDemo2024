@@ -87,3 +87,17 @@ void goodCode4() {
     ],
   );
 }
+
+// ============================================
+// 使用箭头函数
+// 如果一个函数只有一条语句，使用 () => 箭头函数。
+
+void badCode5() {
+  double calculate(int width, int height) {
+    return width / (height * height);
+  }
+}
+
+void goodCode5() {
+  double calculate(int width, int height) => width / (height * height);
+}
