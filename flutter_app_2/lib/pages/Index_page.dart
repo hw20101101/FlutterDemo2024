@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart';
 import 'home_page.dart';
-import 'cart_page.dart';
+import 'video_page.dart';
 import 'category_page.dart';
 import 'member_page.dart';
 
@@ -36,8 +36,7 @@ class _IndexPageState extends State<IndexPage> {
   //定义底部的 tabar
   final List<BottomNavigationBarItem> bottomTabs = [
     const BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: '首页'),
-    const BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.search), label: '分类'),
+    const BottomNavigationBarItem(icon: Icon(CupertinoIcons.film), label: '视频'),
     const BottomNavigationBarItem(
         icon: Icon(CupertinoIcons.shopping_cart), label: '购物车'),
     const BottomNavigationBarItem(
@@ -45,7 +44,12 @@ class _IndexPageState extends State<IndexPage> {
   ];
 
   // 定义 tabbar item 对应的页面
-  final List tabItems = [HomePage(), CartPage(), CategoryPage(), MemberPage()];
+  final List tabItems = [
+    HomePage(),
+    const VideoPlayerPage(),
+    CategoryPage(),
+    MemberPage()
+  ];
 
   int currentIndex = 0;
   var currentPage;

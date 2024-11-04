@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+class VideoPlayerPage extends StatefulWidget {
+  const VideoPlayerPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _VideoPlayerScreenState();
 }
 
-class _VideoPlayerScreenState extends State<CartPage> {
+class _VideoPlayerScreenState extends State<VideoPlayerPage> {
   late VideoPlayerController _controller;
   late Future<void> _initVideoPlayerFuture;
 
   @override
   void initState() {
     super.initState();
+
+    //网络视频地址
     _controller = VideoPlayerController.networkUrl(Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'));
 
@@ -30,7 +32,6 @@ class _VideoPlayerScreenState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    //return Container();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Butterfly Video'),
