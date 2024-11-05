@@ -39,13 +39,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerPage> {
       body: FutureBuilder(
         future: _initVideoPlayerFuture,
         builder: (context, snapshot) {
-          //---
+          //必须在 _initializeVideoPlayerFuture 完成后才展示 VideoPlayer 组件
           if (snapshot.connectionState == ConnectionState.done) {
+            // 把 VideoPlayer 组件嵌进一个 AspectRatio 组件中，保证视频播放保持正确的比例
             return AspectRatio(
               aspectRatio: _controller.value.aspectRatio,
               child: VideoPlayer(_controller),
             );
           } else {
+            // 使用 FutureBuilder 来展示一个旋转的加载图标直到初始化完成
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -63,6 +65,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerPage> {
           });
         },
         child:
+            // 根据播放状态展示播放或者暂停的图标
             Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
       ),
     );
