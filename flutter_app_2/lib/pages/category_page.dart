@@ -13,12 +13,12 @@ class CategoryPage extends StatelessWidget {
   }
 }
 
-void testAsync() {
-  print(createOrderMessage());
+Future<void> testAsync() async {
+  print(await createOrderMessage());
 }
 
-String createOrderMessage() {
-  var order = fetchUserOrder();
+Future<String> createOrderMessage() async {
+  var order = await fetchUserOrder();
   return "your order is: $order";
 }
 
