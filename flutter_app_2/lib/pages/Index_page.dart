@@ -38,7 +38,7 @@ class _IndexPageState extends State<IndexPage> {
     const BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: '首页'),
     const BottomNavigationBarItem(icon: Icon(CupertinoIcons.film), label: '视频'),
     const BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.shopping_cart), label: '购物车'),
+        icon: Icon(CupertinoIcons.cube_box), label: '分类'),
     const BottomNavigationBarItem(
         icon: Icon(CupertinoIcons.profile_circled), label: '我的')
   ];
