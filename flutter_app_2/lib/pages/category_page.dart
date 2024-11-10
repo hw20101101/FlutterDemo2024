@@ -14,13 +14,21 @@ class CategoryPage extends StatelessWidget {
 }
 
 Future<void> testAsync() async {
-  print(await createOrderMessage());
+  countSeconds(4);
+  await createOrderMessage();
 }
 
-Future<String> createOrderMessage() async {
+Future<void> countSeconds(int s) async {
+  for (int i = 1; i <= s; i++) {
+    Future.delayed(Duration(seconds: i), () => print('index: $i'));
+  }
+}
+
+Future<void> createOrderMessage() async {
   var order = await fetchUserOrder();
-  return "your order is: $order";
+  print("awaiting user order...");
+  print("your order is: $order");
 }
 
 Future<String> fetchUserOrder() =>
-    Future.delayed(const Duration(seconds: 2), () => 'lagre latte');
+    Future.delayed(const Duration(seconds: 4), () => 'lagre latte');
