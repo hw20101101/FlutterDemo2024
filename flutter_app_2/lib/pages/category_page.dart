@@ -8,6 +8,7 @@ class CategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //测试异步函数
     testAsync();
+    testAsync2();
 
     return Scaffold(body: Center(child: Text('分类页面')));
   }
@@ -43,7 +44,8 @@ Future<String> fetchUserOrder() {
   return str;
 }
 
-// ==================== 3.异步函数调用 ====================
+// ==================== 练习使用异步和等待 ↓ ===================
+// https://dart.cn/libraries/async/async-await/
 
 // Part 1
 // Call the provided async function fetchRole()
@@ -73,7 +75,7 @@ Future<int> fetchLoginAmount() => Future.delayed(_halfSecond, () => _logins);
 // The following code is used to test and provide feedback on your solution.
 // There is no need to read or modify it.
 
-void main() async {
+void testAsync2() async {
   print('Testing...');
   List<String> messages = [];
   const passed = 'PASSED';
