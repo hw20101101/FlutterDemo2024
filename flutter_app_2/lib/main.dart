@@ -7,14 +7,14 @@ import 'pages/Index_page.dart';
 void main() {
   runApp(const MyApp());
 
-  // 将模型提供给应用程序中的所有小部件。
-  // https://github.com/flutter/samples/tree/main/provider_counter
-  // https://pub.dev/packages/provider
+// 将模型提供给应用程序中的所有小部件。
+// https://github.com/flutter/samples/tree/main/provider_counter
+// https://pub.dev/packages/provider
 
-  // runApp(ChangeNotifierProvider(
-  //     //在构建器中初始化模型。这样，提供者 可以拥有Counter的生命周期，确保 当不再需要的时候 调用`dispose`
-  //     create: (context) => Counter(),
-  //     child: const MyApp()));
+// runApp(ChangeNotifierProvider(
+//     //在构建器中初始化模型。这样，提供者 可以拥有Counter的生命周期，确保 当不再需要的时候 调用`dispose`
+//     create: (context) => Counter(),
+//     child: const MyApp()));
 }
 
 // ==================== 1. 使用 Provider 来管理状态 ====================
