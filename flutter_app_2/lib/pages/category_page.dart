@@ -10,7 +10,8 @@ class CategoryPage extends StatelessWidget {
     // testAsync();
     // testAsync2();
     // testAsync3();
-    testAsync4();
+    // testAsync4();
+    testStream();
 
     return Scaffold(body: Center(child: Text('分类页面')));
   }
@@ -285,7 +286,7 @@ Future<String> _asyncDidCatchException(Function fn) async {
 const _passed = 'PASSED';
 const _noCatch = 'NO_CATCH';
 
-// ===
+// ===  ===  ===  ===  === 4 练习异步函数-注销用户 ===  ===  ===  ===  ===
 
 // Part 1
 addHello(String user) {
@@ -485,3 +486,29 @@ String _failOnce() {
 }
 
 bool _logoutSucceeds = false;
+
+// ===  ===  ===  ===  === 5 接收 stream 事件 ===  ===  ===  ===  ===
+
+Future<int> sumStream(Stream<int> stream) async {
+  var sum = 0;
+  await for (final value in stream) {
+    sum += value;
+    // print("sum1: $sum");
+  }
+  return sum;
+}
+
+Stream<int> countStream(int to) async* {
+  for (int i = 1; i <= to; i++) {
+    //print("index: $i"); 输出 1 ~ 10
+    yield i; //作用类似于 return 语句; https://dart.cn/articles/libraries/creating-streams
+  }
+}
+
+//ToDo 24.11.11 这段逻辑不是很明白
+void testStream() async {
+  var stream = countStream(10);
+  // print("stream: $stream"); Instance of '_ControllerStream<int>'
+  var sum = await sumStream(stream);
+  print("sum: $sum");
+}
