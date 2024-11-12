@@ -491,17 +491,24 @@ bool _logoutSucceeds = false;
 
 Future<int> sumStream(Stream<int> stream) async {
   var sum = 0;
-  await for (final value in stream) {
-    sum += value;
-    // print("sum1: $sum");
+  try {
+    await for (final value in stream) {
+      sum += value;
+    }
+  } catch (err) {
+    return -1;
   }
   return sum;
 }
 
 Stream<int> countStream(int to) async* {
   for (int i = 1; i <= to; i++) {
-    //print("index: $i"); 输出 1 ~ 10
-    yield i; //作用类似于 return 语句; https://dart.cn/articles/libraries/creating-streams
+    if (i == 4) {
+      throw Exception('Intentional exception'); //模拟报错
+    } else {
+      //print("index: $i"); 输出 1 ~ 10
+      yield i; //作用类似于 return 语句;
+    }
   }
 }
 
