@@ -558,9 +558,16 @@ Stream<int> timedCounter(Duration inter, [int? maxCount]) {
   return controller.stream;
 }
 
-void testStreamController() {
+void testStreamController() async {
   var counterStream = timedCounter(const Duration(seconds: 1), 15);
-  counterStream.listen(print); //每秒打印一个整数，15次。
+
+  // 5秒后，添加一个监听器。
+  // 此时前面的 5 个事件会被同时输出，因为它们被 StreamController 缓存了。
+  await Future.delayed(const Duration(seconds: 5));
+
+  await for (final n in counterStream) {
+    print("n: $n"); //每秒打印一个整数，15次。
+  }
 }
 
 // 注： timedCounter 有两个问题：
