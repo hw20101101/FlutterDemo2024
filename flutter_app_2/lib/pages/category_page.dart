@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ class CategoryPage extends StatelessWidget {
     // testAsync2();
     // testAsync3();
     // testAsync4();
-    testStream();
+    // testStream();
+    testStreamController();
 
     return Scaffold(body: Center(child: Text('分类页面')));
   }
@@ -501,6 +503,9 @@ Future<int> sumStream(Stream<int> stream) async {
   return sum;
 }
 
+// async 表示单元素异步，与 await 搭配使用
+// async* 表示多元素异步，与 yield、yield* 、await 搭配使用
+// sync* 表示多元素同步，与 yield、yield* 搭配使用
 Stream<int> countStream(int to) async* {
   for (int i = 1; i <= to; i++) {
     if (i == 4) {
@@ -518,4 +523,47 @@ void testStream() async {
   // print("stream: $stream"); Instance of '_ControllerStream<int>'
   var sum = await sumStream(stream);
   print("sum: $sum");
+
+  late int aa = 0;
+  print("aa: $aa");
 }
+
+// ===  ===  ===  ===  === 6 练习 StreamController ===  ===  ===  ===  ===
+
+/*
+https://dart.cn/articles/libraries/creating-streams
+
+下面的代码将为你展示一个简单的示例（出自 stream_controller_bad.dart），该示例使用 StreamController 来实现上一个示例中的 timedCounter() 函数。
+尽管该示例有一定的缺陷，但其为你展示了 StreamController 的基本用法。该代码将数据直接添加至 StreamController 而不是从 Future 或 Stream 中获取，
+并在最后返回 StreamController 中的 Stream。
+*/
+
+//注意：此实现已刷新！
+//它在有订阅者之前就开始了，并且没有实现暂停。
+Stream<int> timedCounter(Duration inter, [int? maxCount]) {
+  var controller = StreamController<int>();
+  int counter = 0;
+
+  void tick(Timer timer) {
+    counter++;
+    controller.add(counter); //要求流将计数器值作为事件发送。
+
+    if (maxCount != null && counter >= maxCount) {
+      timer.cancel();
+      controller.close(); //让流关闭并告诉监听器。
+    }
+  }
+
+  Timer.periodic(inter, tick); //BAD：在有订阅者之前就开始了。
+  return controller.stream;
+}
+
+void testStreamController() {
+  var counterStream = timedCounter(const Duration(seconds: 1), 15);
+  counterStream.listen(print); //每秒打印一个整数，15次。
+}
+
+// 注： timedCounter 有两个问题：
+
+// 它在拥有订阅者之前就开始生成事件。
+// 即使订阅者请求暂停，它也会继续生成事件。
