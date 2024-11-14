@@ -532,42 +532,61 @@ void testStream() async {
 
 /*
 https://dart.cn/articles/libraries/creating-streams
-
-下面的代码将为你展示一个简单的示例（出自 stream_controller_bad.dart），该示例使用 StreamController 来实现上一个示例中的 timedCounter() 函数。
-尽管该示例有一定的缺陷，但其为你展示了 StreamController 的基本用法。该代码将数据直接添加至 StreamController 而不是从 Future 或 Stream 中获取，
-并在最后返回 StreamController 中的 Stream。
 */
 
-//注意：此实现已刷新！
-//它在有订阅者之前就开始了，并且没有实现暂停。
-Stream<int> timedCounter(Duration inter, [int? maxCount]) {
-  var controller = StreamController<int>();
+Stream<int> timedCounter(Duration interval, [int? maxCount]) {
+  late StreamController<int> controller;
+  Timer? timer;
   int counter = 0;
 
-  void tick(Timer timer) {
+  void tick(_) {
     counter++;
     controller.add(counter); //要求流将计数器值作为事件发送。
 
-    if (maxCount != null && counter >= maxCount) {
-      timer.cancel();
+    if (counter == maxCount) {
+      timer?.cancel();
       controller.close(); //让流关闭并告诉监听器。
     }
   }
 
-  Timer.periodic(inter, tick); //BAD：在有订阅者之前就开始了。
+  void startTimer() {
+    timer = Timer.periodic(interval, tick);
+  }
+
+  void stopTimer() {
+    timer?.cancel();
+    timer = null;
+  }
+
+  // 必须使用全部的回调 onListen、onCancel、onPause 和 onResume 来通知暂停状态的变化，
+  // 否则如果订阅状态与暂停状态在同一时间都改变了，只会有 onListen 或 onCancel 回调会被调用。
+  controller = StreamController(
+      onListen: startTimer,
+      onPause: stopTimer,
+      onResume: startTimer,
+      onCancel: stopTimer);
   return controller.stream;
 }
 
 void testStreamController() async {
   var counterStream = timedCounter(const Duration(seconds: 1), 15);
+  late StreamSubscription<int> subscription;
+
+  subscription = counterStream.listen((int counter) {
+    print(counter); //每秒打印一个整数。
+    if (counter == 5) {
+      // 5次勾选后，暂停5秒，然后继续。
+      subscription.pause(Future.delayed(const Duration(seconds: 5)));
+    }
+  });
 
   // 5秒后，添加一个监听器。
   // 此时前面的 5 个事件会被同时输出，因为它们被 StreamController 缓存了。
-  await Future.delayed(const Duration(seconds: 5));
+  // await Future.delayed(const Duration(seconds: 5));
 
-  await for (final n in counterStream) {
-    print("n: $n"); //每秒打印一个整数，15次。
-  }
+  // await for (final n in counterStream) {
+  //   print("n: $n"); //每秒打印一个整数，15次。
+  // }
 }
 
 // 注： timedCounter 有两个问题：
