@@ -15,6 +15,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerPage> {
   @override
   void initState() {
     super.initState();
+    testLogin();
 
     //网络视频地址
     _controller = VideoPlayerController.networkUrl(Uri.parse(
@@ -70,4 +71,34 @@ class _VideoPlayerScreenState extends State<VideoPlayerPage> {
       ),
     );
   }
+}
+
+// 测试异步回调
+
+//用户登录
+Future<String> login(String userName, String pwd) async {
+  return "张三";
+}
+
+//获取用户数据
+Future<String> getUserInfo(String id) async {
+  return "hw1238913";
+}
+
+//保存用户数据
+Future saveUserInfo(String userInfo) async {
+  print("-->> userInfo: $userInfo");
+}
+
+void testLogin() {
+  login("zhangsan", "123").then((id) {
+    return getUserInfo(id);
+  }).then((userInfo) {
+    return saveUserInfo(userInfo);
+  }).then((e) {
+    //saveUserInfo 未返回数据，可执行其他操作
+  }).catchError((error) {
+    //处理错误
+    print("-->> error: $error");
+  });
 }

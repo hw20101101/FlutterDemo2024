@@ -47,8 +47,8 @@ class _IndexPageState extends State<IndexPage> {
   // 定义 tabbar item 对应的页面
   final List tabItems = [
     HomePage(),
-    // const VideoPlayerPage(),
-    ProviderPage2(),
+    const VideoPlayerPage(),
+    // ProviderPage2(),
     CategoryPage(),
     MemberPage()
   ];
