@@ -25,6 +25,9 @@ void testProvider1() {
 
 void testProvider2() {
   // https://ducafecat.medium.com/flutter-最佳实践和编码准则-54d07752c545
+
+  // 在这个例子中，ChangeNotifierProvider 创建了一个CounterModel的实例，并将其提供给 MyApp。
+  // 在 MyApp 的子 widget中，可以通过 Provider.of(context) 或 Consumer 来获取计数器模型的实例，并根据模型的状态更新UI。
   runApp(ChangeNotifierProvider(
       create: (context) => CounterProvider2(), child: const MyApp()));
 }
