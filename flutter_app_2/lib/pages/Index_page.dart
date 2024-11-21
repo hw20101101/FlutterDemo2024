@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/pages/nav_page1.dart';
 // import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'provider_page2.dart';
@@ -47,7 +48,8 @@ class _IndexPageState extends State<IndexPage> {
   // 定义 tabbar item 对应的页面
   final List tabItems = [
     HomePage(),
-    const VideoPlayerPage(),
+    Nav_Page(),
+    // const VideoPlayerPage(),
     // ProviderPage2(),
     CategoryPage(),
     MemberPage()
