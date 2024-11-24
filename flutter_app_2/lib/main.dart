@@ -64,21 +64,43 @@ class MyApp1 extends StatelessWidget {
   }
 }
 
-// 叠加图片示例
+// 叠加图片示例 - 垂直居中并保持底部间距
 class MyApp3 extends StatelessWidget {
   const MyApp3({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // 获取屏幕的高度
+    double screenHeight = MediaQuery.of(context).size.height;
+    double image1Height = 400; // 第一张图片的高度
+    double image2Height = 98;
+    double image1bottomMargin =
+        screenHeight / 2 - image1Height / 2; // 第一张图片的底部间距
+    double image2bottomMargin = image1bottomMargin + image2Height - 20;
+
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('叠加图片示例')),
+        appBar: AppBar(title: Text('图片叠加示例')),
         body: Center(
           child: Stack(
-            alignment: Alignment.center,
+            alignment: Alignment.center, // 垂直居中
             children: [
-              Image.asset('assets/image1.png'), // 第一张图片
-              Image.asset('assets/image2.png'), // 第二张图片
+              Positioned(
+                bottom: image1bottomMargin, // 底部间距
+                child: Image.asset(
+                  'assets/img_bg@1x.png',
+                  height: image1Height, // 第一张图片的高度
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                bottom: image2bottomMargin, // 底部间距
+                child: Image.asset(
+                  'assets/img_code@1x.png',
+                  height: image2Height, // 第二张图片的高度
+                  fit: BoxFit.cover,
+                ),
+              ),
             ],
           ),
         ),
