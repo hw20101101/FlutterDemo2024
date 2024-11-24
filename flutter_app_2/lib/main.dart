@@ -7,9 +7,9 @@ import 'pages/provider_page1.dart';
 import 'pages/provider_page2.dart';
 
 void main() {
-  // runApp(const MyApp());
+  runApp(MyApp3());
   // testProvider();
-  testProvider2();
+  // testProvider2();
 }
 
 void testProvider1() {
@@ -60,6 +60,29 @@ class MyApp1 extends StatelessWidget {
       title: 'title',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const ProviderPage1(),
+    );
+  }
+}
+
+// 叠加图片示例
+class MyApp3 extends StatelessWidget {
+  const MyApp3({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('叠加图片示例')),
+        body: Center(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset('assets/image1.png'), // 第一张图片
+              Image.asset('assets/image2.png'), // 第二张图片
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
