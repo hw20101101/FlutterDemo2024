@@ -21,8 +21,64 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('首页')),
-        body: Center(child: Text('首页 - body')));
+        appBar: AppBar(title: Text('设备列表')),
+        body: ListView(children: [
+          deviceListTile(
+            title: "1号设备",
+            status: "在线",
+            icon: Icons.camera,
+            onTap: () {},
+          ),
+          deviceListTile(
+            title: "2号设备",
+            status: "离线",
+            icon: Icons.camera,
+            onTap: () {},
+          ),
+        ]));
+  }
+
+  //设备列表项
+  Widget deviceListTile(
+      {String? title, String? status, IconData? icon, VoidCallback? onTap}) {
+    return Column(
+      children: [
+        //设备名称、在线状态、设备图标
+        Row(
+          children: [
+            SizedBox(width: 16),
+            Icon(icon),
+            Text(title!),
+            Spacer(),
+            Text(status!),
+            SizedBox(width: 16),
+          ],
+        ),
+        SizedBox(height: 10),
+        //设备预览图
+        Image.asset(
+          "assets/device_bg.png",
+          width: 340,
+          height: 150,
+          fit: BoxFit.cover,
+        ),
+        //底部的按钮数组
+        Row(
+          children: [
+            Spacer(),
+            bottomButtonItem("回放", Icons.control_camera, () {}),
+            Spacer(),
+            bottomButtonItem("消息", Icons.settings, () {}),
+            Spacer(),
+            bottomButtonItem("分享", Icons.share, () {}),
+            Spacer(),
+            bottomButtonItem("设置", Icons.more_horiz, () {}),
+            Spacer(),
+          ],
+        ),
+        SizedBox(height: 30),
+      ],
+    );
   }
 
   @override
@@ -65,5 +121,18 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       case AppLifecycleState.paused:
       // TODO: Handle this case.
     }
+  }
+
+  //底部按钮
+  bottomButtonItem(String title, IconData icon, Null Function() onPressed) {
+    return Column(
+      children: [
+        IconButton(
+          icon: Icon(icon),
+          onPressed: onPressed,
+        ),
+        Text(title),
+      ],
+    );
   }
 }
