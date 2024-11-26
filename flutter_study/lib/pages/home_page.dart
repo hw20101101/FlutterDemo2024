@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/pages/message_page.dart';
 
 // 首页界面(设备列表)
 class HomePage extends StatefulWidget {
@@ -66,13 +67,19 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         Row(
           children: [
             Spacer(),
-            bottomButtonItem("回放", Icons.control_camera, () {}),
+            bottomButtonItem("回放", Icons.video_call, () {}),
             Spacer(),
-            bottomButtonItem("消息", Icons.settings, () {}),
+            bottomButtonItem("消息", Icons.message, () {
+              // print("-->> 点击消息按钮");
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const MessagePage(titles: "消息页面")));
+            }),
             Spacer(),
             bottomButtonItem("分享", Icons.share, () {}),
             Spacer(),
-            bottomButtonItem("设置", Icons.more_horiz, () {}),
+            bottomButtonItem("设置", Icons.settings, () {}),
             Spacer(),
           ],
         ),
