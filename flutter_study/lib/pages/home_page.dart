@@ -71,10 +71,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             Spacer(),
             bottomButtonItem("消息", Icons.message, () {
               // print("-->> 点击消息按钮");
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const MessagePage(titles: "消息页面")));
+              _navigateAndDisplaySelection(context);
             }),
             Spacer(),
             bottomButtonItem("分享", Icons.share, () {}),
@@ -86,6 +83,29 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         SizedBox(height: 30),
       ],
     );
+  }
+
+  //消息按钮点击事件
+  Future<void> _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const MessagePage(
+                datas: "0",
+              )),
+    );
+
+    // When a BuildContext is used from a StatefulWidget, the mounted property
+    // must be checked after an asynchronous gap.
+    if (!context.mounted) return;
+
+    // After the Selection Screen returns a result, hide any previous snackbars
+    // and show the new result.
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text('在页面底部显示结果: $result')));
   }
 
   @override
