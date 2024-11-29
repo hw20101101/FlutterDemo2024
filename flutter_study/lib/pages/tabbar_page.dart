@@ -4,14 +4,14 @@ import 'package:flutter_application_2/pages/home_page.dart';
 import 'package:flutter_application_2/pages/member_page.dart';
 
 // StatefulWidget - 动态组件
-class IndexPage extends StatefulWidget {
-  const IndexPage({super.key});
+class TabbarPage extends StatefulWidget {
+  const TabbarPage({super.key});
 
   @override
-  _IndexPageState createState() => _IndexPageState();
+  _TabbarPageState createState() => _TabbarPageState();
 }
 
-class _IndexPageState extends State<IndexPage> {
+class _TabbarPageState extends State<TabbarPage> {
   //定义底部的 tabar
   final List<BottomNavigationBarItem> bottomTabs = [
     const BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: '首页'),

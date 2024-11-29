@@ -19,16 +19,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '百姓生活',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.pink),
-      home: const IndexPage(),
+      home: const TabbarPage(),
     );
   }
 }
 
 // ==================== 2. 使用 Provider 来管理状态 ====================
-
+/*
 class MyApp1 extends StatelessWidget {
   const MyApp1({super.key});
 
@@ -47,4 +46,4 @@ void testProvider1() {
       //在构建器中初始化模型。这样，提供者 可以拥有Counter的生命周期，确保 当不再需要的时候 调用`dispose`
       create: (context) => CounterProvider1(),
       child: const MyApp()));
-}
+}*/
