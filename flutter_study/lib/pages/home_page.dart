@@ -89,14 +89,18 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Future<void> _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
+
+    //定义要传到下个页面的数据
+    var message = Message("title-张三", "desc-test");
+
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => const MessagePage(
                 datas: "0",
-              )),
+              ),
+          settings: RouteSettings(arguments: message)),
     );
-
     // When a BuildContext is used from a StatefulWidget, the mounted property
     // must be checked after an asynchronous gap.
     if (!context.mounted) return;

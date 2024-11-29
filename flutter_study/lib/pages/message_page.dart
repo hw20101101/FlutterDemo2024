@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+//定义两个页面间传递的数据类型
+class Message {
+  final String title;
+  final String description;
+
+  const Message(this.title, this.description);
+}
+
 class MessagePage extends StatefulWidget {
   const MessagePage({super.key, required this.datas});
   final String datas; //从上个页面传递过来的数据
@@ -11,8 +19,11 @@ class MessagePage extends StatefulWidget {
 class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
-    //修改返回到上个页面的数据
+    //一：修改返回到上个页面的数据
     var tempData = "10${widget.datas}";
+    //二：接收上个页面传递过来的数据
+    final message = ModalRoute.of(context)!.settings.arguments as Message;
+    print("-->> 上个页面传递的数据：${message.title}");
 
     return Scaffold(
         appBar: AppBar(
