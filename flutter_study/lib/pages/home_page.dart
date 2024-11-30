@@ -1,5 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/pages/message_page.dart';
+import 'package:http/http.dart' as http;
+
+// Album 模型
+class Album {
+  final int userId;
+  final int id;
+  final String title;
+
+  const Album({required this.userId, required this.id, required this.title});
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {"userId": int userId, "id": int id, "title": String title} =>
+        Album(userId: userId, id: id, title: title),
+      _ => throw const FormatException("failed to load album.")
+    };
+  }
+}
 
 // 首页界面(设备列表)
 class HomePage extends StatefulWidget {
@@ -9,7 +29,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late AppLifecycleState _appLifecycleState;
+  late Future<Album> _futureAlbum;
 
+  //http.Response 类包含成功的 http 请求接收到的数据
+  Future<Album> fetchAlbum() async {
+    var url = Uri.parse("https://jsonplaceholder.typicode.com/albums/1");
+    final response = await http.get(url);
+
+    // 将 http.Response 转换成 Album
+    if (response.statusCode == 200) {
+      return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw Exception('failed to load album');
+    }
+  }
+
+  // initState() 方法仅会被调用一次
   @override
   void initState() {
     super.initState();
@@ -17,6 +52,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     //添加状态监听者
     WidgetsBinding.instance.addObserver(this);
     _appLifecycleState = WidgetsBinding.instance.lifecycleState!;
+    _futureAlbum = fetchAlbum();
+    print("_futureAlbum:$_futureAlbum");
   }
 
   @override
