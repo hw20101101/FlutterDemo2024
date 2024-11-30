@@ -31,8 +31,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late AppLifecycleState _appLifecycleState;
   late Future<Album> _futureAlbum;
 
-  //http.Response 类包含成功的 http 请求接收到的数据
+  // http.Response 类包含成功的 http 请求接收到的数据;
   Future<Album> fetchAlbum() async {
+    print("-->> fetchAlbum");
     var url = Uri.parse("https://jsonplaceholder.typicode.com/albums/1");
     final response = await http.get(url);
 
@@ -44,36 +45,61 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
-  // initState() 方法仅会被调用一次
+  // initState() 方法仅会被调用一次;
+
+  // 为何要在 initState() 中调用 fetchPost() ？
+  // 虽然这样会比较方便，但是我们仍然不推荐将 API 调用置于 build() 方法内部。
+
+  // 将 fetchAlbum() 的结果存储在状态变量中，可确保 Future 只执行一次
   @override
   void initState() {
     super.initState();
+    print("-->> initState");
 
     //添加状态监听者
     WidgetsBinding.instance.addObserver(this);
     _appLifecycleState = WidgetsBinding.instance.lifecycleState!;
     _futureAlbum = fetchAlbum();
-    print("_futureAlbum:$_futureAlbum");
   }
 
+  // 每当 Flutter 需要更改视图中的任何内容时，就会调用 build() 方法
   @override
   Widget build(BuildContext context) {
+    print("-->> build");
+
     return Scaffold(
         appBar: AppBar(title: Text('设备列表')),
-        body: ListView(children: [
-          deviceListTile(
-            title: "1号设备",
-            status: "在线",
-            icon: Icons.camera,
-            onTap: () {},
-          ),
-          deviceListTile(
-            title: "2号设备",
-            status: "离线",
-            icon: Icons.camera,
-            onTap: () {},
-          ),
-        ]));
+        // 显示网络请求返回的数据
+        body: Center(
+          child: FutureBuilder<Album>(
+              future: _futureAlbum,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data!.title);
+                } else if (snapshot.hasError) {
+                  return Text("error:${snapshot.hasError}");
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              }),
+        )
+
+        // body: ListView(children: [
+        //   deviceListTile(
+        //     title: "1号设备",
+        //     status: "在线",
+        //     icon: Icons.camera,
+        //     onTap: () {},
+        //   ),
+        //   deviceListTile(
+        //     title: "2号设备",
+        //     status: "离线",
+        //     icon: Icons.camera,
+        //     onTap: () {},
+        //   ),
+        // ]
+        // )
+        );
   }
 
   //设备列表项
