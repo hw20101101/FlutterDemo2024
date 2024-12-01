@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/pages/message_page.dart';
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   // http.Response 类包含成功的 http 请求接收到的数据;
   Future<Album> fetchAlbum() async {
-    print("-->> fetchAlbum");
+    // print("-->> fetchAlbum");
     var url = Uri.parse("https://jsonplaceholder.typicode.com/albums/1");
     final response = await http.get(url);
 
@@ -45,6 +46,17 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     }
   }
 
+  // 发起 HTTP 认证授权请求
+  Future<Album> fetchAlbum2() async {
+    var url = Uri.parse("https://jsonplaceholder.typicode.com/albums/12");
+    final response = await http
+        .get(url, headers: {HttpHeaders.authorizationHeader: "your_api_token"});
+    final json = jsonDecode(response.body) as Map<String, dynamic>;
+
+    print("-->> json: $json");
+    return Album.fromJson(json);
+  }
+
   // initState() 方法仅会被调用一次;
 
   // 为何要在 initState() 中调用 fetchPost() ？
@@ -54,18 +66,18 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    print("-->> initState");
+    // print("-->> initState");
 
     //添加状态监听者
     WidgetsBinding.instance.addObserver(this);
     _appLifecycleState = WidgetsBinding.instance.lifecycleState!;
-    _futureAlbum = fetchAlbum();
+    _futureAlbum = fetchAlbum2();
   }
 
   // 每当 Flutter 需要更改视图中的任何内容时，就会调用 build() 方法
   @override
   Widget build(BuildContext context) {
-    print("-->> build");
+    // print("-->> build");
 
     return Scaffold(
         appBar: AppBar(title: Text('设备列表')),
