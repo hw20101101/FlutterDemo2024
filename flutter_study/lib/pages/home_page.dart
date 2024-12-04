@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/pages/message_page.dart';
+
+import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:http/http.dart' as http;
 
 // Album 模型
@@ -74,6 +76,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       throw Exception('Failed to create album.');
     }
   }
+
+  //websocket
 
   // initState() 方法仅会被调用一次;
 
