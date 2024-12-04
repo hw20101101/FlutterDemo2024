@@ -29,7 +29,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late AppLifecycleState _appLifecycleState;
-  late Future<Album> _futureAlbum;
+  final TextEditingController _textController = TextEditingController();
+  Future<Album>? _futureAlbum;
 
   // http.Response 类包含成功的 http 请求接收到的数据;
   Future<Album> fetchAlbum() async {
@@ -89,46 +90,68 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _appLifecycleState = WidgetsBinding.instance.lifecycleState!;
     // _futureAlbum = fetchAlbum2();
-    _futureAlbum = createAlbum("test album");
+  }
+
+  Column buildCloumn() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        TextField(
+          controller: _textController,
+          decoration: const InputDecoration(hintText: 'enter title'),
+        ),
+        ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _futureAlbum = createAlbum(_textController.text);
+              });
+            },
+            child: const Text('create data'))
+      ],
+    );
+  }
+
+  FutureBuilder<Album> buildFutureBuilder() {
+    return FutureBuilder<Album>(
+        future: _futureAlbum,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.title);
+          } else if (snapshot.hasError) {
+            return Text("error:${snapshot.hasError}");
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
   }
 
   // 每当 Flutter 需要更改视图中的任何内容时，就会调用 build() 方法
   @override
   Widget build(BuildContext context) {
-    // print("-->> build");
-
     return Scaffold(
-        appBar: AppBar(title: Text('设备列表')),
-        // 显示网络请求返回的数据
-        body: Center(
-          child: FutureBuilder<Album>(
-              future: _futureAlbum,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Text(snapshot.data!.title);
-                } else if (snapshot.hasError) {
-                  return Text("error:${snapshot.hasError}");
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              }),
-        )
+      appBar: AppBar(title: Text('设备列表')),
+      // 显示网络请求返回的数据
+      body: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(8),
+        child: (_futureAlbum == null) ? buildCloumn() : buildFutureBuilder(),
+      ),
 
-        // body: ListView(children: [
-        //   deviceListTile(
-        //     title: "1号设备",
-        //     status: "在线",
-        //     icon: Icons.camera,
-        //     onTap: () {},
-        //   ),
-        //   deviceListTile(
-        //     title: "2号设备",
-        //     status: "离线",
-        //     icon: Icons.camera,
-        //     onTap: () {},
-        //   ),
-        // ])
-        );
+      // body: ListView(children: [
+      //   deviceListTile(
+      //     title: "1号设备",
+      //     status: "在线",
+      //     icon: Icons.camera,
+      //     onTap: () {},
+      //   ),
+      //   deviceListTile(
+      //     title: "2号设备",
+      //     status: "离线",
+      //     icon: Icons.camera,
+      //     onTap: () {},
+      //   ),
+      // ])
+    );
   }
 
   //设备列表项
