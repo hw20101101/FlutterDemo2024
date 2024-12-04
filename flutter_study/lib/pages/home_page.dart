@@ -7,16 +7,15 @@ import 'package:http/http.dart' as http;
 
 // Album 模型
 class Album {
-  final int userId;
+  // final int userId;
   final int id;
   final String title;
 
-  const Album({required this.userId, required this.id, required this.title});
+  const Album({required this.id, required this.title});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     return switch (json) {
-      {"userId": int userId, "id": int id, "title": String title} =>
-        Album(userId: userId, id: id, title: title),
+      {"id": int id, "title": String title} => Album(id: id, title: title),
       _ => throw const FormatException("failed to load album.")
     };
   }
@@ -57,6 +56,24 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     return Album.fromJson(json);
   }
 
+  Future<Album> createAlbum(String title) async {
+    final response = await http.post(
+        Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{'title': title}));
+
+    print("-->> response: $response");
+
+    if (response.statusCode == 201) {
+      // 将http.Response转换为Album
+      return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw Exception('Failed to create album.');
+    }
+  }
+
   // initState() 方法仅会被调用一次;
 
   // 为何要在 initState() 中调用 fetchPost() ？
@@ -71,7 +88,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     //添加状态监听者
     WidgetsBinding.instance.addObserver(this);
     _appLifecycleState = WidgetsBinding.instance.lifecycleState!;
-    _futureAlbum = fetchAlbum2();
+    // _futureAlbum = fetchAlbum2();
+    _futureAlbum = createAlbum("test album");
   }
 
   // 每当 Flutter 需要更改视图中的任何内容时，就会调用 build() 方法
@@ -109,8 +127,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         //     icon: Icons.camera,
         //     onTap: () {},
         //   ),
-        // ]
-        // )
+        // ])
         );
   }
 
