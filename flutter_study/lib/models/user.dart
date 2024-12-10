@@ -58,6 +58,8 @@ class User3 {
   // dart run build_runner build --delete-conflicting-outputs
   factory User3.fromJson(Map<String, dynamic> json) => _$User3FromJson(json);
 
+  // 注：修改 @JsonSerializable(explicitToJson: true) 之后
+  // 需要在终端重新执行 dart run build_runner build --delete-conflicting-outputs 才能使 address toJson() 方法 生效
   Map<String, dynamic> toJson() => _$User3ToJson(this);
 }
 
