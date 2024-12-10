@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'address.dart';
+
 part 'user.g.dart';
 
 class User {
@@ -45,12 +47,13 @@ void testJson(String jsonString) {
 
 // 以 json_serializable 的方式创建模型类
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class User3 {
   String name;
   String email;
+  Address address;
 
-  User3(this.name, this.email);
+  User3(this.name, this.email, this.address);
 
   // dart run build_runner build --delete-conflicting-outputs
   factory User3.fromJson(Map<String, dynamic> json) => _$User3FromJson(json);

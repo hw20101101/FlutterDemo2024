@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/models/address.dart';
+import 'package:flutter_application_2/models/user.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class MemberPage extends StatefulWidget {
@@ -55,6 +57,14 @@ class _MemberPageState extends State<MemberPage> {
       //要向服务器发送数据
       _channel.sink.add(_textController.text);
     }
+
+    testAddress();
+  }
+
+  void testAddress() {
+    Address address = Address("中山大道1号", "广州");
+    User3 user = User3("zhangsan", "xxxx@13.com", address);
+    print(user.toJson());
   }
 
   @override
