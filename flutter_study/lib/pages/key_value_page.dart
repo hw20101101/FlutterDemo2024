@@ -1,4 +1,5 @@
-//将数据存储在硬盘上
+// 将数据存储在硬盘上。
+// 注：如果你要存储的键值集合相对较少，则可以用 shared_preferences 插件。
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
