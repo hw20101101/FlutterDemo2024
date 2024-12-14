@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/pages/isolate_page.dart';
+import 'package:flutter_application_2/pages/key_value_page.dart';
 
 // 首页界面(设备列表)
 class HomePage extends StatefulWidget {
@@ -17,27 +18,24 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           ListTile(
             title: const Text("Test Isolate（线程调度）"),
             onTap: () {
-              // 跳转下一个页面
-              listTileOnTap();
+              // 跳转下一个页面 IsolatePage
+              listTileOnTap(const IsolatePage(
+                title: 'IsolatePage',
+              ));
             },
           ),
           ListTile(
-            title: const Text("Test Other "),
+            title: const Text("Key Value（将 key value 存储在硬盘中）"),
             onTap: () {
               // 跳转下一个页面
-              print("Test Other ");
+              listTileOnTap(const KeyValuePage(title: 'KeyValuePage'));
             },
           ),
         ]));
   }
 
   // 跳转下一个页面
-  void listTileOnTap() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const IsolatePage(
-                  title: "Test Isolate",
-                )));
+  void listTileOnTap(Widget page) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => page));
   }
 }
