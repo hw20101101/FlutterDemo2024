@@ -1,5 +1,9 @@
 // 将数据存储在硬盘上。
-// 注：如果你要存储的键值集合相对较少，则可以用 shared_preferences 插件。
+// 注：如果你要存储的键值集合相对较少，则可以用 shared_preferences 插件，有以下局限性：
+
+// 只能用于基本数据类型： int、double、bool、string 和 List<String>。
+// 不是为存储大量数据而设计的。
+// 不能确保应用重启后数据仍然存在。
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
