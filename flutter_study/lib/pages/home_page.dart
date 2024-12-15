@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/pages/isolate_page.dart';
 import 'package:flutter_application_2/pages/key_value_page.dart';
+import 'package:flutter_application_2/pages/read_write_file.dart';
 
 // 首页界面(设备列表)
 class HomePage extends StatefulWidget {
@@ -29,6 +30,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             onTap: () {
               // 跳转下一个页面
               listTileOnTap(const KeyValuePage(title: 'KeyValuePage'));
+            },
+          ),
+          ListTile(
+            title: const Text("文件读写"),
+            onTap: () {
+              // 跳转下一个页面
+              listTileOnTap(ReadWriteFile(
+                storage: CounterStorage(),
+              ));
             },
           ),
         ]));
