@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/pages/isolate_page.dart';
 import 'package:flutter_application_2/pages/key_value_page.dart';
 import 'package:flutter_application_2/pages/read_write_file.dart';
+import 'package:flutter_application_2/pages/sqlite_page.dart';
 
 // 首页界面(设备列表)
 class HomePage extends StatefulWidget {
@@ -41,6 +42,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               ));
             },
           ),
+          ListTile(
+            title: const Text("SQLite 读写"),
+            onTap: () {
+              // 跳转下一个页面
+              listTileOnTap(const SQLitePage(
+                title: 'sqlitePage',
+              ));
+            },
+          ),
         ]));
   }
 
@@ -48,4 +58,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void listTileOnTap(Widget page) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => page));
   }
+
+  //12-15 TODO: 用 SQLite 做数据持久化
 }
