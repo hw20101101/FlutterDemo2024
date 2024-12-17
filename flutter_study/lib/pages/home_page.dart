@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/pages/animation_page.dart';
 import 'package:flutter_application_2/pages/isolate_page.dart';
 import 'package:flutter_application_2/pages/key_value_page.dart';
 import 'package:flutter_application_2/pages/read_write_file.dart';
@@ -49,6 +50,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               listTileOnTap(const SQLitePage(
                 title: 'sqlitePage',
               ));
+            },
+          ),
+          ListTile(
+            title: const Text("动画"),
+            onTap: () {
+              // 跳转下一个页面
+              listTileOnTap(const AnimationPage());
             },
           ),
         ]));
