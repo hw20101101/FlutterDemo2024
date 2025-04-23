@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/pages/animation_page.dart';
 import 'package:flutter_application_2/pages/isolate_page.dart';
 import 'package:flutter_application_2/pages/key_value_page.dart';
+import 'package:flutter_application_2/pages/msg_detail_page.dart';
 import 'package:flutter_application_2/pages/read_write_file.dart';
 import 'package:flutter_application_2/pages/sqlite_page.dart';
 
@@ -57,6 +58,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             onTap: () {
               // 跳转下一个页面
               listTileOnTap(const AnimationPage());
+            },
+          ),
+          ListTile(
+            title: const Text("消息详情"),
+            onTap: () {
+              // 跳转下一个页面
+              listTileOnTap(const MessageDetailPage());
             },
           ),
         ]));

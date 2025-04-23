@@ -27,6 +27,7 @@ class _TabbarPageState extends State<TabbarPage> {
 
   @override
   void initState() {
+    print("TabbarPage initState");
     //默认选中的 tabItem
     currentPage = tabItems[currentIndex];
     super.initState();
@@ -34,6 +35,7 @@ class _TabbarPageState extends State<TabbarPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("TabbarPage build");
     return Scaffold(
       backgroundColor: Color.fromARGB(244, 244, 255, 1),
       bottomNavigationBar: BottomNavigationBar(

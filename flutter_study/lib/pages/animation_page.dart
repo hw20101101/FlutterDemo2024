@@ -1,5 +1,9 @@
 // Animation 动画
 
+// 动画和动作小部件 https://docs.flutter.cn/ui/widgets/animation
+// 动画教程 https://docs.flutter.cn/ui/animations/tutorial
+// 动画概述 https://docs.flutter.cn/ui/animations
+
 import 'package:flutter/material.dart';
 
 class AnimationPage extends StatelessWidget {
