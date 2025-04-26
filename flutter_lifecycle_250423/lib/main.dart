@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-// import 'package:flutter_lifecycle_250423/page1.dart';
+import 'package:flutter_lifecycle_250423/page1.dart';
 
 void main() {
   // 捕捉 Flutter 框架层的错误
@@ -36,34 +36,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: _navigatorKey, // 挂上全局 navigator key
-      home: const HomePage(),
+      home: Page1(),
     );
   }
 }
 
-// 正常首页
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('首页')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // 故意制造一个空指针异常
-            String? data;
-            print(data!.length);
-          },
-          child: const Text('点击爆炸！'),
-        ),
-      ),
-    );
-  }
-}
-
-// 自定义友好的错误页面
+// ======= 自定义友好的错误页面 =======
 class FriendlyErrorPage extends StatelessWidget {
   const FriendlyErrorPage({super.key});
 
@@ -86,11 +64,11 @@ class FriendlyErrorPage extends StatelessWidget {
               onPressed: () {
                 // 重新回到首页
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  MaterialPageRoute(builder: (context) => Page1()),
                   (route) => false,
                 );
               },
-              child: const Text('返回首页'),
+              child: const Text('返回首页 Page1'),
             )
           ],
         ),

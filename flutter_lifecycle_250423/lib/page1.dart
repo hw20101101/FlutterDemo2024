@@ -26,6 +26,13 @@ class _Page1State extends State<Page1> with WidgetsBindingObserver {
       print("实时Frame绘制回调"); //每帧都回调
       //update 调用顺序 3
     });
+
+    //延迟调用
+    // Future.delayed(Duration(seconds: 5), () {
+    //   // 故意制造一个空指针异常
+    //   String? data;
+    //   print(data!.length);
+    // });
   }
 
   @override

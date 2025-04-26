@@ -15,10 +15,6 @@ class _Page2State extends State<Page2> {
   void initState() {
     super.initState();
     print("page2 parent initState......");
-
-    // 访问 Page2 的key
-    final key = widget.key;
-    print('Page2 key: ${key!.toString()}');
   }
 
   @override
@@ -47,6 +43,11 @@ class _Page2State extends State<Page2> {
         child: TextButton(
           //点击事件
           onPressed: () {
+            // 故意制造一个空指针异常
+            final key = widget.key;
+            print('Page2 key: ${key!.toString()}');
+
+            //--
             setState(() {
               _counter++;
             });
