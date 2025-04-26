@@ -15,6 +15,15 @@ class _Page2State extends State<Page2> {
   void initState() {
     super.initState();
     print("page2 parent initState......");
+
+    // 访问 Page2 的key
+    final key = widget.key;
+    try {
+      // Null check operator used on a null value
+      print('Page2 key: ${key!.toString()}');
+    } catch (e) {
+      print("Page2 key: $e");
+    }
   }
 
   @override
