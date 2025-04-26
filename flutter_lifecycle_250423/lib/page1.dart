@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lifecycle_250423/page2.dart';
 
 class Page1 extends StatefulWidget {
-  // Page1({Key key}) : super(key: key);
+  Page1({Key? key}) : super(key: key);
   @override
   _Page1State createState() => _Page1State();
 }
@@ -60,7 +60,7 @@ class _Page1State extends State<Page1> with WidgetsBindingObserver {
     //update 调用顺序 2
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lifecycle demo'),
+        title: Text('Page1'),
       ),
       body: Center(
         child: Column(
