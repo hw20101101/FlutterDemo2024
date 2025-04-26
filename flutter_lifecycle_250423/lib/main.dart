@@ -19,7 +19,7 @@ void main() {
 }
 
 void _handleFlutterError(Object error, StackTrace stackTrace) {
-  print('发生了错误: $error');
+  print('发生了错误: $error $stackTrace');
   // 这里直接切换到友好的错误页面
   _navigatorKey.currentState?.pushAndRemoveUntil(
     MaterialPageRoute(builder: (context) => const FriendlyErrorPage()),
