@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lifecycle_250423/page2.dart';
 
 class Page1 extends StatefulWidget {
   // Page1({Key key}) : super(key: key);
@@ -57,10 +58,13 @@ class _Page1State extends State<Page1> with WidgetsBindingObserver {
       body: Center(
         child: Column(
           children: [
-            // TextButton(onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => Parent())), child:  Text("打开/关闭新页面查看状态变化"))
             TextButton(
-                onPressed: () => print('-- onPressed'),
+                onPressed: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Page2())),
                 child: Text("打开/关闭新页面查看状态变化"))
+            // TextButton(
+            //     onPressed: () => print('-- onPressed'),
+            //     child: Text("打开/关闭新页面查看状态变化"))
           ],
         ),
       ),
