@@ -18,13 +18,7 @@ class _Page2State extends State<Page2> {
 
     // 访问 Page2 的key
     final key = widget.key;
-    try {
-      // Null check operator used on a null value
-      // 使用空安全操作符 ? ；使用 ?? 提供默认值
-      print('Page2 key: ${key?.toString() ?? "null"}');
-    } catch (e) {
-      print("Page2 key error: $e");
-    }
+    print('Page2 key: ${key!.toString()}');
   }
 
   @override
