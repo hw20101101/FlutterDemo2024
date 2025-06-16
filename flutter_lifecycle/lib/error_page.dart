@@ -1,6 +1,6 @@
 // ======= 自定义友好的错误页面 =======
 import 'package:flutter/material.dart';
-import 'package:flutter_lifecycle_250423/page1.dart';
+import 'package:flutter_lifecycle_250423/normal_page1.dart';
 
 class FriendlyErrorPage extends StatelessWidget {
   const FriendlyErrorPage({super.key});

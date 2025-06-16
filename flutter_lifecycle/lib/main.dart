@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_lifecycle_250423/error_page.dart';
-import 'package:flutter_lifecycle_250423/page1.dart';
+import 'package:flutter_lifecycle_250423/normal_page1.dart';
 
 void main() {
   // 捕捉 Flutter 框架层的错误

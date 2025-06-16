@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lifecycle_250423/page2.dart';
+import 'package:flutter_lifecycle_250423/normal_page2.dart';
 
 class Page1 extends StatefulWidget {
   Page1({Key? key}) : super(key: key);
